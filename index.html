@@ -1,6 +1,6 @@
 <!doctype html><meta charset=utf-8><title>Trail Planner</title>
 <style>#map{position:relative;overflow:hidden}.leaflet-pane,.leaflet-pane>*,.leaflet-tile,.leaflet-top{position:absolute;left:0;top:0;transform-origin:0 0}
-.leaflet-tile{width:256px;height:256px;visibility:hidden}.leaflet-tile-loaded{visibility:inherit}.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-top{z-index:1000}.leaflet-bottom{display:none}.leaflet-control-zoom a{display:block;width:30px;text-align:center;background:#fff}.leaflet-tooltip{background:#fff;white-space:nowrap}</style>
+.leaflet-tile{width:256px;height:256px;visibility:hidden}.leaflet-tile-loaded{visibility:inherit}.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-top{z-index:1000}.leaflet-bottom{display:none}.leaflet-control-zoom a{display:block;width:30px;text-align:center;background:#fff}</style>
 <script src=https://unpkg.com/leaflet@1.9.4/dist/leaflet.js></script>
 <p id=out>Click trails to select them. Click the map to set a start.</p>
 <div id=map style="height:85vh"></div>
@@ -33,7 +33,7 @@ function load(g) {
     }
     const c = path.map(k => pt[k]), s = {id: segs.length, a: path[0], b: cur, c, name: nb.get(path[0]).get(path[1]),
       len: c.reduce((t, p, i) => i ? t + map.distance([p[1], p[0]], [c[i - 1][1], c[i - 1][0]]) : 0, 0)};
-    s.line = L.polyline(c.map(p => [p[1], p[0]]), {color: 'gray', weight: 4}).bindTooltip(s.name).addTo(map).on('click', e => {
+    s.line = L.polyline(c.map(p => [p[1], p[0]]), {color: 'gray', weight: 4}).addTo(map).on('click', e => {
       L.DomEvent.stopPropagation(e);
       sel.has(s.id) ? sel.delete(s.id) : sel.add(s.id);
       s.line.setStyle({color: sel.has(s.id) ? 'blue' : 'gray'}); solve();
